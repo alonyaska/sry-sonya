@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Прости меня, Соня ❤️</title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #fdf6f0 0%, #fce9dd 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #c97b6b;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: #9a7a6e;
+      max-width: 320px;
+      line-height: 1.7;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    .hero-emoji {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      color: #c97b6b;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      animation: fadeInUp 1s ease-out 1s both;
+    }
+
+    .scroll-arrow {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-right: 2px solid #c97b6b;
+      border-bottom: 2px solid #c97b6b;
+      transform: rotate(45deg);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    /* ===== Section Shared ===== */
+    .section {
+      padding: 4rem 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #c97b6b;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* ===== Apology Text ===== */
+    .apology-text {
+      background: rgba(255, 255, 255, 0.6);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.9;
+      color: #5a4a40;
+      box-shadow: 0 4px 24px rgba(201, 123, 107, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .apology-text p {
+      margin-bottom: 1rem;
+    }
+
+    .apology-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .apology-text .highlight {
+      color: #c97b6b;
+      font-weight: 500;
+    }
+
+    /* ===== Coupons ===== */
+    .coupons-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .coupon-card {
+      width: 100%;
+      max-width: 380px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem 1.25rem;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(201, 123, 107, 0.1);
+      border: 1px dashed #dbb8ac;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: default;
+    }
+
+    .coupon-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201, 123, 107, 0.15);
+    }
+
+    .coupon-card::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      background: #fce9dd;
+      border-radius: 50%;
+    }
+
+    .coupon-card::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      background: #fce9dd;
+      border-radius: 50%;
+    }
+
+    .coupon-number {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #c97b6b;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+
+    .coupon-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #4a3a30;
+      margin-bottom: 0.4rem;
+    }
+
+    .coupon-desc {
+      font-size: 0.85rem;
+      color: #8a7a70;
+      line-height: 1.5;
+    }
+
+    .coupon-tear {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed #dbb8ac;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .coupon-tear span {
+      font-size: 0.7rem;
+      color: #b8a89e;
+    }
+
+    .coupon-tear i {
+      font-size: 0.9rem;
+      color: #c97b6b;
+    }
+
+    /* ===== Final Verdict ===== */
+    .verdict-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 2rem;
+      position: relative;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 340px;
+      padding: 1rem 2rem;
+      border-radius: 14px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-green {
+      background: #b5d6b2;
+      color: #2d5a2a;
+      box-shadow: 0 4px 14px rgba(181, 214, 178, 0.4);
+    }
+
+    .btn-green:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(181, 214, 178, 0.5);
+    }
+
+    .btn-yellow {
+      background: #f5e6b8;
+      color: #7a6a30;
+      box-shadow: 0 4px 14px rgba(245, 230, 184, 0.4);
+    }
+
+    .btn-yellow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 230, 184, 0.5);
+    }
+
+    .btn-red {
+      background: #f0c4c4;
+      color: #7a3030;
+      box-shadow: 0 4px 14px rgba(240, 196, 196, 0.4);
+      z-index: 10;
+    }
+
+    .btn-red:hover {
+      box-shadow: 0 6px 20px rgba(240, 196, 196, 0.5);
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      text-align: center;
+      padding: 2rem 1.5rem 3rem;
+      color: #b8a89e;
+      font-size: 0.8rem;
+      font-weight: 300;
+    }
+
+    .footer span {
+      color: #c97b6b;
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    @keyframes bounce {
+      0%,
+      100% {
+        transform: rotate(45deg) translate(0, 0);
+      }
+      50% {
+        transform: rotate(45deg) translate(4px, 4px);
+      }
+    }
+
+    /* ===== Responsive ===== */
+    @media (min-width: 640px) {
+      .hero-title {
+        font-size: 3.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.15rem;
+        max-width: 400px;
+      }
+
+      .section {
+        padding: 5rem 2rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .apology-text {
+        padding: 2.5rem 2rem;
+        font-size: 1.05rem;
+      }
+
+      .verdict-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .btn {
+        width: auto;
+        min-width: 200px;
+        flex: 0 1 auto;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 4rem;
+      }
+
+      .coupons-grid {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .coupon-card {
+        flex: 0 1 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-emoji">🥺</div>
+    <h1 class="hero-title">Прости меня, Соня.</h1>
+    <p class="hero-subtitle">Словами всего не описать, поэтому я сделал этот сайт</p>
+    <div class="scroll-indicator">
+      <span>Листай ниже</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ===== APOLOGY TEXT ===== -->
+  <section class="section" id="apology">
+    <h2 class="section-title">Мне правда очень жаль</h2>
+    <div class="apology-text">
+      <p>
+        Я знаю, что я поступил неправильно. И знаю, что словами тут не помочь.
+        Но я хочу, чтобы ты знала — каждый день без твоей улыбки кажется пустым.
+      </p>
+      <p>
+        Ты — <span class="highlight">самое важное</span>, что есть в моей жизни.
+        Я обещаю стать лучше, слушать внимательнее и ценить каждое мгновение с тобой.
+      </p>
+      <p>
+        Этот сайт — мой способ сказать <span class="highlight">«прости»</span> не просто словами,
+        а делом. Надеюсь, ты дашь мне ещё один шанс.
+      </p>
+      <p style="font-size: 1.3rem;">
+        ❤️
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== COUPONS ===== -->
+  <section class="section" id="coupons">
+    <h2 class="section-title">🎟️ Купоны на память</h2>
+    <div class="coupons-grid">
+
+      <div class="coupon-card">
+        <div class="coupon-number">Купон №1</div>
+        <div class="coupon-title">🏆 Победа в любом споре</div>
+        <div class="coupon-desc">
+          Один раз ты можешь использовать этот купон и я автоматически признаю твою правоту. Спор закрыт.
+        </div>
+        <div class="coupon-tear">
+          <span>Бессрочный · 1 использование</span>
+          <i>✂️</i>
+        </div>
+      </div>
+
+      <div class="coupon-card">
+        <div class="coupon-number">Купон №2</div>
+        <div class="coupon-title">🤗 Вечер обнимашек</div>
+        <div class="coupon-desc">
+          Целый вечер только ты, я и бесконечные объятия. Никаких телефонов, никаких отвлечений.
+        </div>
+        <div class="coupon-tear">
+          <span>Бессрочный · 1 использование</span>
+          <i>✂️</i>
+        </div>
+      </div>
+
+      <div class="coupon-card">
+        <div class="coupon-number">Купон №3</div>
+        <div class="coupon-title">🧹 Домашние дела вместо тебя</div>
+        <div class="coupon-desc">
+          Я беру на себя все домашние обязанности на один день. Уборка, готовка, посуда — всё.
+        </div>
+        <div class="coupon-tear">
+          <span>Бессрочный · 1 использование</span>
+          <i>✂️</i>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FINAL VERDICT ===== -->
+  <section class="section" id="verdict">
+    <h2 class="section-title">Ты меня прощаешь? 💔</h2>
+    <div class="verdict-buttons">
+      <!-- Зеленая кнопка: Да, прощаю -->
+      <a href="https://wa.me/998901234567?text=Я%20прощаю%20тебя%20❤️"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-green">
+      ✅ Да, прощаю
+    </a>
+
+    <!-- Желтая кнопка: Нужно поговорить -->
+    <a href="https://wa.me/998901234567?text=Нам%20нужно%20поговорить..."
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn btn-yellow">
+    💬 Нужно поговорить
+  </a>
+
+  <!-- Красная кнопка: Нет, всё еще злюсь (УБЕГАЮЩАЯ) -->
+  <button id="btnNo" class="btn btn-red">
+    😤 Нет, всё еще злюсь
+  </button>
+</div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  Сделано с <span>❤️</span> специально для тебя
+</footer>
+
+<!-- ===== JS ===== -->
+<script>
+  (function() {
+    const btn = document.getElementById('btnNo');
+    let isRunning = false;
+    let moveTimeout = null;
+
+    function getRandomPosition() {
+      const viewportW = window.innerWidth;
+      const viewportH = window.innerHeight;
+      const btnW = btn.offsetWidth;
+      const btnH = btn.offsetHeight;
+
+      // Keep the button within the viewport, with a small margin
+      const margin = 12;
+      const maxX = Math.max(viewportW - btnW - margin, margin);
+      const maxY = Math.max(viewportH - btnH - margin, margin);
+
+      // Make sure we don't go out of bounds
+      const minX = margin;
+      const minY = margin;
+
+      // If the viewport is too small, just place it somewhere visible
+      if (maxX <= minX || maxY <= minY) {
+        return { left: margin, top: viewportH * 0.3 };
+      }
+
+      const left = Math.floor(Math.random() * (maxX - minX + 1) + minX);
+      const top = Math.floor(Math.random() * (maxY - minY + 1) + minY);
+
+      return { left, top };
+    }
+
+    function moveButton() {
+      if (isRunning) return;
+      isRunning = true;
+
+      // Ensure the button is positioned absolutely
+      btn.style.position = 'fixed';
+      btn.style.zIndex = '9999';
+
+      // Remove max-width constraint while running so it can be placed freely
+      btn.style.maxWidth = 'none';
+
+      const pos = getRandomPosition();
+      btn.style.left = pos.left + 'px';
+      btn.style.top = pos.top + 'px';
+
+      // Add a little shake animation
+      btn.style.transition = 'left 0.12s ease, top 0.12s ease';
+      btn.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        btn.style.transform = 'scale(1)';
+      }, 120);
+
+      isRunning = false;
+    }
+
+    function handleMove(e) {
+      // Prevent default to avoid any text selection issues on mobile
+      e.preventDefault();
+
+      // Clear any previous timeout to debounce rapid movements
+      if (moveTimeout) {
+        clearTimeout(moveTimeout);
+      }
+
+      moveTimeout = setTimeout(() => {
+        moveButton();
+      }, 10);
+    }
+
+    function handleTouchStart(e) {
+      // On mobile, move the button immediately on touch
+      e.preventDefault();
+      if (moveTimeout) {
+        clearTimeout(moveTimeout);
+      }
+      moveButton();
+    }
+
+    // Attach both mouse and touch events
+    btn.addEventListener('mouseenter', handleMove);
+    btn.addEventListener('touchstart', handleTouchStart, { passive: false });
+
+    // Also move on window resize so it stays in view
+    window.addEventListener('resize', function() {
+      if (btn.style.position === 'fixed') {
+        moveButton();
+      }
+    });
+
+    // Initialize position off-screen so it's not at default position
+    // Wait a tick for the DOM to be ready
+    setTimeout(() => {
+      btn.style.position = 'fixed';
+      btn.style.zIndex = '9999';
+      btn.style.maxWidth = 'none';
+      const pos = getRandomPosition();
+      btn.style.left = pos.left + 'px';
+      btn.style.top = pos.top + 'px';
+      btn.style.transition = 'left 0.2s ease, top 0.2s ease';
+    }, 100);
+  })();
+</script>
+</body>
+</html>
